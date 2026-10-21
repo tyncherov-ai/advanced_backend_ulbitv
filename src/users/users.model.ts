@@ -31,29 +31,29 @@ export class User extends Model<User, UserCreationAttrs> {
     unique: true,
     allowNull: false,
   })
-  email!: string;
+  declare email: string;
 
   @ApiProperty({ example: 'hashed-password', description: 'User password' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
+  declare password: string;
 
   @ApiProperty({ example: false, description: 'User banned status' })
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
   })
-  banned!: boolean;
+  declare banned: boolean;
 
   @ApiProperty({ example: null, description: 'Reason for user ban' })
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  bannedReason!: string;
+  declare bannedReason: string;
 
   @BelongsToMany(() => Role, () => UserRoles)
-  roles!: Role[];
+  declare roles: Role[];
 }

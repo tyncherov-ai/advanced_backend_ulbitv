@@ -21,4 +21,4 @@ async function bootstrap() {
     Logger.log(`Server running on http://localhost:${PORT}`, 'NestApplication');
   });
 }
-bootstrap();
+void bootstrap();

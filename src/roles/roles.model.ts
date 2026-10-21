@@ -31,7 +31,7 @@ export class Role extends Model<Role, RoleCreationAttrs> {
     unique: true,
     allowNull: false,
   })
-  value!: string;
+  declare value: string;
 
   @ApiProperty({
     example: 'Administrator role',
@@ -41,8 +41,8 @@ export class Role extends Model<Role, RoleCreationAttrs> {
     type: DataType.STRING,
     allowNull: true,
   })
-  description!: string;
+  declare description: string;
 
   @BelongsToMany(() => User, () => UserRoles)
-  users!: User[];
+  declare users: User[];
 }
