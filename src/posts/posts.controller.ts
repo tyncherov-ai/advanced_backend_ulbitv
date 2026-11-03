@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UploadedFile,
@@ -26,7 +27,11 @@ export class PostsController {
     @UploadedFile() image: Express.Multer.File | undefined,
     @Req() req: Request & { user: JwtPayload },
   ) {
-    // Author is taken from the verified token, not from the request body
     return this.postsService.createPost(dto, req.user.id, image);
+  }
+
+  @Get()
+  getAllPosts() {
+    return this.postsService.getAllPosts();
   }
 }

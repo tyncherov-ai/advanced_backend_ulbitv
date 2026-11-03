@@ -3,6 +3,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Post } from './posts.model';
 import { FilesService } from '../files/files.service';
+import { User } from '../users/users.model';
 
 @Injectable()
 export class PostsService {
@@ -31,5 +32,12 @@ export class PostsService {
       await this.filesService.removeFile(fileName);
       throw e;
     }
+  }
+
+  async getAllPosts() {
+    return await this.postRepository.findAll({
+      include: [{ model: User, attributes: ['id', 'email'] }],
+      order: [['createdAt', 'DESC']],
+    });
   }
 }
