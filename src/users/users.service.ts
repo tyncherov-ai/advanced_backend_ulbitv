@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { RolesService } from '../roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BanUserDto } from './dto/ban-user.dto';
+import { Role } from '../roles/roles.model';
 
 @Injectable()
 export class UsersService {
@@ -36,7 +37,7 @@ export class UsersService {
   async getUserByEmail(email: string) {
     const user = await this.userRepository.findOne({
       where: { email },
-      include: { all: true },
+      include: [Role],
     });
     return user;
   }

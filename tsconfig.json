@@ -3,7 +3,8 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "types": [
-      "jest"
+      "jest",
+      "multer"
     ],
     "resolvePackageJsonExports": true,
     "esModuleInterop": true,
