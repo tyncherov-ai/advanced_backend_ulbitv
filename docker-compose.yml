@@ -1,0 +1,42 @@
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+    env_file:
+      - .env.development
+    environment:
+      # inside Docker the database is reachable by service name, not localhost
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      # file watching on Windows bind mounts needs polling
+      TSC_WATCHFILE: dynamicprioritypolling
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    command: yarn start:dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres
+    image: postgres:18
+    env_file:
+      - .env.development
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:
